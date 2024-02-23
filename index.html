@@ -2,18 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Welcome to Our Site</h1>
-    <div id="netlify-identity-widget"></div>
-    <!-- Include Netlify Identity widget script -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Login Button -->
+    <button onclick="netlifyIdentity.open()">Login</button>
 
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-        if (window.netlifyIdentity) {
-          window.netlifyIdentity.init();
-        }
-      </script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', function(user) {
+          if (!user) {
+            window.netlifyIdentity.on('login', function() {
+              location.reload();
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>
